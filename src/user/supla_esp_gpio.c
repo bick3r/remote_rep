@@ -820,6 +820,7 @@ uint32 supla_esp_gpio_get_cfg_press_time(supla_input_cfg_t *input_cfg) {
 	return CFG_BTN_PRESS_TIME;
 }
 
+unsigned char active_filter = 0; // Nowy filtr
 LOCAL void
 supla_esp_gpio_input_timer_cb(void *timer_arg) {
 
@@ -843,14 +844,18 @@ supla_esp_gpio_input_timer_cb(void *timer_arg) {
 			}
 
 			input_cfg->step = 2;
+active_filter = 1; // Nowy filtr
 			return;
 
 		} else {
 
 			if ( input_cfg->cycle_counter >= INPUT_MIN_CYCLE_COUNT ) {
 
+if (active_filter == 1) { // Nowy filtr
 				supla_esp_gpio_on_input_inactive(input_cfg);
 
+active_filter = 0; // Nowy filtr
+} // Nowy filtr
 			} else if ( input_cfg->cycle_counter < 255 ) {
 
 				input_cfg->cycle_counter++;
@@ -906,9 +911,12 @@ supla_esp_gpio_input_timer_cb(void *timer_arg) {
 				 && input_cfg->cycle_counter >= INPUT_MIN_CYCLE_COUNT ) {
 
 
+if (active_filter == 1) { // Nowy filtr
 				supla_esp_gpio_on_input_active(input_cfg);
 
 
+active_filter = 0; // Nowy filtr
+} // Nowy filtr
 				if ( (input_cfg->flags & INPUT_FLAG_CFG_BTN) == 0
 						|| input_cfg->type == INPUT_TYPE_BTN_BISTABLE ) {
 
@@ -1506,7 +1514,4 @@ char supla_esp_gpio_relay_is_hi(int port) {
 char  supla_esp_gpio_relay_on(int port) {
 	return supla_esp_gpio_output_is_hi(port) == HI_VALUE ? 1 : 0;
 }
-
-
-
 
