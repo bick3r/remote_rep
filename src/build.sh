@@ -141,7 +141,14 @@ case $1 in
    "inCanRS_DHT22")
     SPI_MODE="QIO"
     FLASH_SIZE="4096"
-  ;;
+   ;;
+     "mk_gate_02")
+     FOTA=0
+   ;;
+    "mk_gate_02_dht22")
+      FOTA=0
+   ;;
+  
     
    *)
    echo "Usage:"
