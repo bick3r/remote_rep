@@ -19,7 +19,7 @@
 #ifndef SONOFF_H_
 #define SONOFF_H_
 
-#define ESP8266_SUPLA_PROTO_VERSION 7
+#define ESP8266_SUPLA_PROTO_VERSION 12
 
 #ifdef __BOARD_sonoff_ds18b20
 	#define DS18B20

@@ -114,7 +114,7 @@ void supla_esp_board_gpio_init(void) {
 
 }
 
-void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_B *channels, unsigned char *channel_count) {
+void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count) {
 	
 
 	#ifdef __BOARD_sonoff_ds18b20
@@ -131,7 +131,7 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_B *channels, unsigned c
 								| SUPLA_BIT_RELAYFUNC_LIGHTSWITCH;
 
 	channels[0].Default = SUPLA_CHANNELFNC_POWERSWITCH;
-
+        channels[0].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;
 	channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
 
 	#ifdef __BOARD_sonoff_ds18b20
