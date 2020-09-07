@@ -19,13 +19,11 @@
 #ifndef SUPLA_ESP_H_
 #define SUPLA_ESP_H_
 
-#define MEMLEAK_DEBUG
-
 #include "supla-dev/proto.h"
 #include "board/supla_esp_board.h"
 #include "espmissingincludes.h"
 
-#define SUPLA_ESP_SOFTVER "2.7.16"
+#define SUPLA_ESP_SOFTVER "2.7.25"
 
 #define STATE_UNKNOWN       0
 #define STATE_DISCONNECTED  1
@@ -104,6 +102,14 @@
 #define INPUT_TYPE_BTN_BISTABLE_RS       5
 #define INPUT_TYPE_CUSTOM                200
 
+#ifndef INPUT_MIN_CYCLE_COUNT
+#define INPUT_MIN_CYCLE_COUNT   5
+#endif /*INPUT_MIN_CYCLE_COUNT*/
+
+#ifndef INPUT_CYCLE_TIME
+#define INPUT_CYCLE_TIME        20
+#endif /*INPUT_CYCLE_TIME*/
+
 // milliseconds
 #ifndef RS_START_DELAY
 #define RS_START_DELAY 1000
@@ -139,6 +145,14 @@
 #define DHT_ICACHE_FLASH ICACHE_FLASH_ATTR
 #endif
 
+#ifndef CDT_ICACHE_FLASH_ATTR
+#define CDT_ICACHE_FLASH_ATTR  ICACHE_FLASH_ATTR
+#endif
+
+#ifndef DNS_ICACHE_FLASH_ATTR
+#define DNS_ICACHE_FLASH_ATTR  ICACHE_FLASH_ATTR
+#endif
+
 #ifndef BTN1_DEFAULT
 #define BTN1_DEFAULT BTN_TYPE_MONOSTABLE
 #endif
@@ -153,6 +167,10 @@
 
 #ifndef PRODUCT_ID
 #define PRODUCT_ID 0
+#endif
+
+#ifndef DEVICE_FLAGS
+#define DEVICE_FLAGS 0
 #endif
 
 void supla_esp_board_set_device_name(char *buffer, uint8 buffer_size);
@@ -284,6 +302,12 @@ extern const uint8_t rsa_public_key_bytes[RSA_NUM_BYTES];
 #define RGBW_CHANNEL_LIMIT if ( ChannelNumber >= 2 ) return;
 #endif
 
-extern uint32 heartbeat_timer_sec;
+#ifdef DONT_SAVE_STATE
+#define DEVICE_STATE_INACTIVE
+#endif
+
+unsigned _supla_int64_t MAIN_ICACHE_FLASH uptime_usec(void);
+unsigned _supla_int64_t MAIN_ICACHE_FLASH uptime_msec(void);
+uint32 MAIN_ICACHE_FLASH uptime_sec(void);
 
 #endif /* SUPLA_ESP_H_ */
