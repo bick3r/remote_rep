@@ -49,28 +49,32 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
     channels[0].FuncList = 0;
     channels[0].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;
     channels[0].value[0] = 0;
+    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
     channels[1].Number = 1;
     channels[1].Type = SUPLA_CHANNELTYPE_SENSORNO;
     channels[1].FuncList = 0;
     channels[1].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;
     channels[1].value[0] = 0;
+    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
-    channels[2].Number = 2;
+     channels[2].Number = 2;
     channels[2].Type = SUPLA_CHANNELTYPE_RELAY;
-    channels[2].FuncList =  SUPLA_BIT_FUNC_CONTROLLINGTHEGATEWAYLOCK \
-				| SUPLA_BIT_FUNC_CONTROLLINGTHEGATE \
-				| SUPLA_BIT_FUNC_CONTROLLINGTHEGARAGEDOOR \
-				| SUPLA_BIT_FUNC_CONTROLLINGTHEDOORLOCK;
+    channels[2].FuncList = SUPLA_BIT_FUNC_CONTROLLINGTHEGATEWAYLOCK \
+                         | SUPLA_BIT_FUNC_CONTROLLINGTHEGATE \
+                         | SUPLA_BIT_FUNC_CONTROLLINGTHEGARAGEDOOR \
+                         | SUPLA_BIT_FUNC_CONTROLLINGTHEDOORLOCK;
     channels[2].Default = 0;
     channels[2].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
-
+    channels[2].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
+    
     channels[3].Number = 3;
     channels[3].Type = SUPLA_CHANNELTYPE_RELAY;
     channels[3].FuncList = SUPLA_BIT_FUNC_POWERSWITCH | SUPLA_BIT_FUNC_LIGHTSWITCH;
     channels[3].Default = SUPLA_CHANNELFNC_POWERSWITCH;
     channels[3].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;
     channels[3].value[0] = supla_esp_gpio_relay_on(B_RELAY2_PORT);
+    channels[3].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
     channels[4].Number = 4;
     #if defined(__BOARD_mk_gate_02_dht22)
@@ -80,6 +84,7 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
     #endif
     channels[4].FuncList = 0;
     channels[4].Default = 0;
+    channels[4].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
     #if defined(__BOARD_mk_gate_02_dht22)
 	supla_get_temp_and_humidity(channels[4].value);
 	#else
