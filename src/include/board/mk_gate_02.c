@@ -40,7 +40,7 @@ void supla_esp_board_gpio_init(void)
     supla_relay_cfg[1].channel = 3;
 }
 
-void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_B *channels, unsigned char *channel_count)
+void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count)
 {
     *channel_count = 5;
 
@@ -58,17 +58,18 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_B *channels, unsigned c
 
     channels[2].Number = 2;
     channels[2].Type = SUPLA_CHANNELTYPE_RELAY;
-    channels[2].FuncList = SUPLA_BIT_RELAYFUNC_CONTROLLINGTHEGATEWAYLOCK \
-                         | SUPLA_BIT_RELAYFUNC_CONTROLLINGTHEGATE \
-                         | SUPLA_BIT_RELAYFUNC_CONTROLLINGTHEGARAGEDOOR \
-                         | SUPLA_BIT_RELAYFUNC_CONTROLLINGTHEDOORLOCK;
+    channels[2].FuncList =  SUPLA_BIT_FUNC_CONTROLLINGTHEGATEWAYLOCK \
+				| SUPLA_BIT_FUNC_CONTROLLINGTHEGATE \
+				| SUPLA_BIT_FUNC_CONTROLLINGTHEGARAGEDOOR \
+				| SUPLA_BIT_FUNC_CONTROLLINGTHEDOORLOCK;
     channels[2].Default = 0;
     channels[2].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
 
     channels[3].Number = 3;
     channels[3].Type = SUPLA_CHANNELTYPE_RELAY;
-    channels[3].FuncList = channels[2].FuncList;
-    channels[3].Default = channels[2].Default;
+    channels[3].FuncList = SUPLA_BIT_FUNC_POWERSWITCH | SUPLA_BIT_FUNC_LIGHTSWITCH;
+    channels[3].Default = SUPLA_CHANNELFNC_POWERSWITCH;
+    channels[3].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;
     channels[3].value[0] = supla_esp_gpio_relay_on(B_RELAY2_PORT);
 
     channels[4].Number = 4;

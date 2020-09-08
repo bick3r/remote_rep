@@ -2,7 +2,7 @@
 #ifndef MK_GATE_02_H_
 #define MK_GATE_02_H_
 
-#define ESP8266_SUPLA_PROTO_VERSION 7
+#define ESP8266_SUPLA_PROTO_VERSION 12
 
 #if defined(__BOARD_mk_gate_02_dht22)
 #define DHTSENSOR
