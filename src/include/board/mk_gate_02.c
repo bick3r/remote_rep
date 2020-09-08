@@ -67,9 +67,8 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_B *channels, unsigned c
 
     channels[3].Number = 3;
     channels[3].Type = SUPLA_CHANNELTYPE_RELAY;
-    channels[3].FuncList = SUPLA_BIT_RELAYFUNC_POWERSWITCH | SUPLA_BIT_RELAYFUNC_LIGHTSWITCH;
-    channels[3].Default = SUPLA_CHANNELFNC_POWERSWITCH;
-    channels[0].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;
+    channels[3].FuncList = channels[2].FuncList;
+    channels[3].Default = channels[2].Default;
     channels[3].value[0] = supla_esp_gpio_relay_on(B_RELAY2_PORT);
 
     channels[4].Number = 4;

@@ -2,8 +2,6 @@
 #ifndef MK_GATE_02_H_
 #define MK_GATE_02_H_
 
-#define SUPLA_ESP_SOFTVER "2.7.16.2"
-
 #define ESP8266_SUPLA_PROTO_VERSION 7
 
 #if defined(__BOARD_mk_gate_02_dht22)
