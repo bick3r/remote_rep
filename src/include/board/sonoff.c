@@ -91,7 +91,7 @@ void supla_esp_board_set_device_name(char *buffer, uint8 buffer_size) {
 	#ifdef __BOARD_sonoff_ds18b20
 		ets_snprintf(buffer, buffer_size, "SONOFF-DS18B20");
 	#else
-		ets_snprintf(buffer, buffer_size, "SONOFF");
+		ets_snprintf(buffer, buffer_size, "SONOFF - Timer");
 	#endif
 }
 
@@ -131,7 +131,7 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
 								| SUPLA_BIT_FUNC_LIGHTSWITCH;
 
 	channels[0].Default = SUPLA_CHANNELFNC_POWERSWITCH;
-        channels[0].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;
+    channels[0].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;         //dodanie timera
 	channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
 
 	#ifdef __BOARD_sonoff_ds18b20
@@ -153,3 +153,5 @@ void supla_esp_board_send_channel_values_with_delay(void *srpc) {
 	supla_esp_channel_value_changed(0, supla_esp_gpio_relay_on(B_RELAY1_PORT));
 
 }
+void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {          	//dioda
+  supla_esp_gpio_set_led(!supla_esp_cfg.StatusLedOff, 0, 0);					//dioda

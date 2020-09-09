@@ -36,5 +36,5 @@
 #define LED_RED_PORT    13
 
 void supla_esp_board_send_channel_values_with_delay(void *srpc);
-
+void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void);   //gasimy diode
 #endif
