@@ -11,9 +11,9 @@
 void supla_esp_board_set_device_name(char *buffer, uint8 buffer_size)
 {
 #if defined(__BOARD_mk_gate_02_dht22)
-    ets_snprintf(buffer, buffer_size, "MK GATE-02 1.1 DHT22");
+    ets_snprintf(buffer, buffer_size, "GATE DHT22");
 #else
-    ets_snprintf(buffer, buffer_size, "MK GATE-02 1.1");
+    ets_snprintf(buffer, buffer_size, "GATE");
 #endif
 }
 
@@ -49,14 +49,14 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
     channels[0].FuncList = 0;
     channels[0].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;
     channels[0].value[0] = 0;
-    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
+//    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
     channels[1].Number = 1;
     channels[1].Type = SUPLA_CHANNELTYPE_SENSORNO;
     channels[1].FuncList = 0;
     channels[1].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;
     channels[1].value[0] = 0;
-    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
+//    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
      channels[2].Number = 2;
     channels[2].Type = SUPLA_CHANNELTYPE_RELAY;
@@ -66,7 +66,7 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
                          | SUPLA_BIT_FUNC_CONTROLLINGTHEDOORLOCK;
     channels[2].Default = 0;
     channels[2].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
-    channels[2].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
+//    channels[2].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
     
     channels[3].Number = 3;
     channels[3].Type = SUPLA_CHANNELTYPE_RELAY;
@@ -84,7 +84,7 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
     #endif
     channels[4].FuncList = 0;
     channels[4].Default = 0;
-    channels[4].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
+//    channels[4].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
     #if defined(__BOARD_mk_gate_02_dht22)
 	supla_get_temp_and_humidity(channels[4].value);
 	#else
