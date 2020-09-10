@@ -115,10 +115,10 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       "value=\"%s\"><label>E-mail</label></i></div><div "
       "class=\"w\"><h3>Additional Settings</h3><i><select name=\"led\"><option "
       "value=\"0\" %s>LED "
-      "ON<option value=\"1\" %s>LED OFF</select><label>Status - " 
-    //  "connected</label></i><i><select name=\"upd\"><option value=\"0\" "
-   //   "%s>NO<option value=\"1\" %s>YES</select><label>Firmware "
-      "LED</label></i></div><button "
+      "ON<option value=\"1\" %s>LED OFF</select><label>Status - "
+      "connected</label></i><i><select name=\"upd\"><option value=\"0\" "
+      "%s>NO<option value=\"1\" %s>YES</select><label>Firmware "
+      "update</label></i></div><button "
       "type=\"submit\">SAVE</button></form></div><br><br>";
 
   int bufflen = strlen(supla_esp_devconn_laststate()) + strlen(dev_name) +
@@ -152,8 +152,9 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       (unsigned char)mac[4], (unsigned char)mac[5], supla_esp_cfg.WIFI_SSID,
       supla_esp_cfg.Server, supla_esp_cfg.Email,
       supla_esp_cfg.StatusLedOff == 0 ? "selected" : "",
-      supla_esp_cfg.StatusLedOff == 1 ? "selected" : ""); 
-  
+      supla_esp_cfg.StatusLedOff == 1 ? "selected" : "",
+      supla_esp_cfg.FirmwareUpdate == 0 ? "selected" : "",
+      supla_esp_cfg.FirmwareUpdate == 1 ? "selected" : "");
 
   return buffer;
 }
@@ -192,14 +193,16 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
 	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
 	
         channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
-
+#endif
 }
 
-void ICACHE_FLASH_ATTR supla_esp_board_send_channel_values_with_delay(void *srpc) {
+void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {
+  supla_esp_gpio_set_led(supla_esp_cfg.StatusLedOff, 0, 0);
+}
+
+void ICACHE_FLASH_ATTR
+supla_esp_board_send_channel_values_with_delay(void *srpc) {
 
 	supla_esp_channel_value_changed(0, supla_esp_gpio_relay_on(B_RELAY1_PORT));
 
 }
-void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {     // LED CFG zgaszona podczas normalnej pracy
-  supla_esp_gpio_set_led(supla_esp_cfg.StatusLedOff, 0, 0);  // LED CFG zgaszona podczas normalnej pracy
-  }                                                            // LED CFG zgaszona podczas normalnej pracy
