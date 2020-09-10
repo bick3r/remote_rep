@@ -16,8 +16,8 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef SONOFF_LED_
-#define SONOFF_LED_
+#ifndef P_SONOFF_H_
+#define P_SONOFF_H_
 
 #define ESP8285
 #define ESP8266_SUPLA_PROTO_VERSION 12 // 7
