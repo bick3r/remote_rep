@@ -91,7 +91,7 @@
 #include "board/mk_gate_02.h"
 
 #elif defined(__BOARD_sonoff_led)
-#include "board/sonoff_led"
+#include "board/sonoff_led.h"
 
 #endif
 
