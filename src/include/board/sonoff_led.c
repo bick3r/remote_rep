@@ -116,8 +116,8 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       "class=\"w\"><h3>Additional Settings</h3><i><select name=\"led\"><option "
       "value=\"0\" %s>LED "
       "ON<option value=\"1\" %s>LED OFF</select><label>Status - " 
-    //  "connected</label></i><i><select name=\"upd\"><option value=\"0\" "
-   //   "%s>NO<option value=\"1\" %s>YES</select><label>Firmware "
+      "connected</label></i><i><select name=\"upd\"><option value=\"0\" "
+      "%s>NO<option value=\"1\" %s>YES</select><label>Firmware "
       "LED</label></i></div><button "
       "type=\"submit\">SAVE</button></form></div><br><br>";
 
@@ -188,10 +188,8 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
 
 	channels[0].Default = SUPLA_CHANNELFNC_POWERSWITCH;
     channels[0].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;  //Nowy Timer
- 
-	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
-	
-        channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
+ 	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
+    channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
 
 }
 
