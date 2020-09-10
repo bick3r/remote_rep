@@ -150,7 +150,7 @@ case $1 in
    ;;
     "sonoff_led")
 	SPI_MODE="DOUT"
-      // FOTA=1
+      FOTA=0
    ;;
     
    *)
