@@ -191,9 +191,9 @@ case $1 in
    echo "              inCanRS_DS";
    echo "              inCanRS_DHT11";
    echo "              inCanRS_DHT22";
-   echo "			   mk_gate_02";
-   echo "			   mk_gate_02_dht22";
-   echo "			   sonoff_led";
+   echo "              mk_gate_02";
+   echo "              mk_gate_02_dht22";
+   echo "              sonoff_led";
    echo
    echo
    exit;
