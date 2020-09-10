@@ -90,6 +90,9 @@
 #elif defined(__BOARD_mk_gate_02) || defined(__BOARD_mk_gate_02_dht22)
 #include "board/mk_gate_02.h"
 
+#elif defined(__BOARD_sonoff_led)
+#include "board/sonoff_led"
+
 #endif
 
 #ifdef SUPLA_ESP_BOARD_SUBDEF

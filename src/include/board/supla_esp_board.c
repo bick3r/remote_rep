@@ -86,8 +86,13 @@
 #elif defined(__BOARD_mk_gate_02) || defined(__BOARD_mk_gate_02_dht22)
 #include "board/mk_gate_02.c"
 
+#elif defined(__BOARD_sonoff_led)
+#include "board/sonoff_led.c"
+
 #endif
 
 #ifdef SUPLA_ESP_BOARD_SUBDEF
 #include "board/supla_esp_board_subdef.c"
 #endif
+
+
