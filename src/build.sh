@@ -149,10 +149,9 @@ case $1 in
       FOTA=0
    ;;
     "sonoff_led")
-	SPI_MODE="DOUT"
-      FOTA=0
-   ;;
-    
+      SPI_MODE="DOUT"
+      FOTA=1
+	;;
    *)
    echo "Usage:"
    echo "       build.sh BOARD_TYPE";
