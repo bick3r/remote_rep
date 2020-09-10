@@ -192,8 +192,8 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
   
 	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
 	
-        channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
-#endif
+     channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
+
 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {
