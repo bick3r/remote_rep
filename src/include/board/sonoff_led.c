@@ -116,10 +116,10 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       "class=\"w\"><h3>Additional Settings</h3><i><select name=\"led\"><option "
       "value=\"0\" %s>LED "
       "ON<option value=\"1\" %s>LED OFF</select><label>Status - "
-      "connected</label></i><i><select name=\"upd\"><option value=\"0\" "
-      "%s>NO<option value=\"1\" %s>YES</select><label>Firmware "
-      "update</label></i></div><button "
-      "type=\"submit\">SAVE</button></form></div><br><br>";
+      "connected</label></i>" 
+	  "<i><select name=\"bt1\"><option value=\"0\" %s>Monostable<option "         	//menu bi/mono
+      "value=\"1\" %s>Bistable</select><label>Button1 type:</label></i>"				//menu bi/mono
+	  "</div><button type=\"submit\">SAVE</button></form></div><br><br>";		//menu bi/mono
 
   int bufflen = strlen(supla_esp_devconn_laststate()) + strlen(dev_name) +
                 strlen(SUPLA_ESP_SOFTVER) + strlen(supla_esp_cfg.WIFI_SSID) +
@@ -153,15 +153,17 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       supla_esp_cfg.Server, supla_esp_cfg.Email,
       supla_esp_cfg.StatusLedOff == 0 ? "selected" : "",
       supla_esp_cfg.StatusLedOff == 1 ? "selected" : "",
-      supla_esp_cfg.FirmwareUpdate == 0 ? "selected" : "",
-      supla_esp_cfg.FirmwareUpdate == 1 ? "selected" : "");
+      supla_esp_cfg.Button1Type == BTN_TYPE_MONOSTABLE ? "selected" : "",		//menu bi/mono
+      supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE ? "selected" : "",			//menu bi/mono
 
   return buffer;
 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
 
-	supla_input_cfg[0].type = INPUT_TYPE_BTN_MONOSTABLE;
+	supla_input_cfg[0].type = supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE         //menu bi/mono
+		? INPUT_TYPE_BTN_TYPE_BISTABLE																//menu bi/mono
+		? INPUT_TYPE_BTN_TYPE_MONOSTABLE															//menu bi/mono
 	supla_input_cfg[0].gpio_id = B_CFG_PORT;
 	supla_input_cfg[0].flags = INPUT_FLAG_PULLUP | INPUT_FLAG_CFG_BTN;
 	supla_input_cfg[0].relay_gpio_id = B_RELAY1_PORT;
