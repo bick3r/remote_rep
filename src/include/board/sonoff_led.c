@@ -23,7 +23,7 @@
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_device_name(char *buffer, uint8 buffer_size) {
 	
-		ets_snprintf(buffer, buffer_size, "Sonoff led timer");
+		ets_snprintf(buffer, buffer_size, "Sonoff led timer_1");
 }
 char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
     char dev_name[25], const char mac[6], const char data_saved) {
@@ -192,8 +192,13 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
   
 	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
 	
+<<<<<<< HEAD
      channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
 
+=======
+        channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
+#endif
+>>>>>>> 29609a6d1ec1daf9fca19c50cb8c6f04154f32ce
 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {
@@ -205,4 +210,8 @@ supla_esp_board_send_channel_values_with_delay(void *srpc) {
 
 	supla_esp_channel_value_changed(0, supla_esp_gpio_relay_on(B_RELAY1_PORT));
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 29609a6d1ec1daf9fca19c50cb8c6f04154f32ce
