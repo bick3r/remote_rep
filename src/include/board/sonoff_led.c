@@ -156,7 +156,7 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
 	  supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE ? "selected" : "",			//menu bi/mono
 	  supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE ? "selected" : "",
 
-return buffer ;
+return buffer;
 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_gpio_relay_switch(void* _input_cfg,
