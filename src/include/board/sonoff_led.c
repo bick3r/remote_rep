@@ -23,7 +23,7 @@
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_device_name(char *buffer, uint8 buffer_size) {
 	
-		ets_snprintf(buffer, buffer_size, "Sonoff led timer");
+		ets_snprintf(buffer, buffer_size, "Sonoff led timer_test");
 }
 char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
     char dev_name[25], const char mac[6], const char data_saved) {
@@ -175,8 +175,7 @@ void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
     supla_relay_cfg[0].gpio_id = B_RELAY1_PORT;
     supla_relay_cfg[0].flags = RELAY_FLAG_RESTORE_FORCE;
     supla_relay_cfg[0].channel = 0;
-    
-
+   
 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count) {
