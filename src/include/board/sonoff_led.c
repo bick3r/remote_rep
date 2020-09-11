@@ -1,16 +1,13 @@
 /*
  Copyright (C) AC SOFTWARE SP. Z O.O.
-
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
  as published by the Free Software Foundation; either version 2
  of the License, or (at your option) any later version.
-
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
-
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -26,7 +23,8 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_device_name(char *buffer, uint8 buffe
 		ets_snprintf(buffer, buffer_size, "Sonoff led timer_test");
 }
 char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
-    char dev_name[25], const char mac[6], const char data_saved) {
+    char dev_name[25], const char mac[6], const char data_saved) 
+	{
   static char html_template_header[] =
       "<!DOCTYPE html><meta http-equiv=\"content-type\" content=\"text/html; "
       "charset=UTF-8\"><meta name=\"viewport\" "
@@ -154,28 +152,59 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       supla_esp_cfg.StatusLedOff == 0 ? "selected" : "",
       supla_esp_cfg.StatusLedOff == 1 ? "selected" : "",
       supla_esp_cfg.Button1Type == BTN_TYPE_MONOSTABLE ? "selected" : "",		//menu bi/mono
-      supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE ? "selected" : "",			//menu bi/mono
+      supla_esp_cfg.Button1Type == BTN_TYPE_MONOSTABLE ? "selected" : "",
+	  supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE ? "selected" : "",			//menu bi/mono
+	  supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE ? "selected" : "",
 
 return buffer ;
 }
 
-void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
+void ICACHE_FLASH_ATTR supla_esp_board_gpio_relay_switch(void* _input_cfg,
+    char hi)
+{
 
-	supla_input_cfg[0].type = supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE         //menu bi/mono
-		? INPUT_TYPE_BTN_TYPE_BISTABLE																//menu bi/mono
-		? INPUT_TYPE_BTN_TYPE_MONOSTABLE															//menu bi/mono
-	supla_input_cfg[0].gpio_id = B_CFG_PORT;
-	supla_input_cfg[0].flags = INPUT_FLAG_PULLUP | INPUT_FLAG_CFG_BTN;
-	supla_input_cfg[0].relay_gpio_id = B_RELAY1_PORT;
-	supla_input_cfg[0].channel = 0;
+    supla_input_cfg_t* input_cfg = (supla_input_cfg_t*)_input_cfg;
 
-	// ---------------------------------------
-	// ---------------------------------------
+    if (input_cfg->relay_gpio_id != 255) {
 
-    supla_relay_cfg[0].gpio_id = B_RELAY1_PORT;
-    supla_relay_cfg[0].flags = RELAY_FLAG_RESTORE_FORCE;
-    supla_relay_cfg[0].channel = 0;
-   
+        // supla_log(LOG_DEBUG, "RELAY");
+
+        supla_esp_gpio_relay_hi(input_cfg->relay_gpio_id, hi, 0);
+
+        if (input_cfg->channel != 255)
+            supla_esp_channel_value_changed(
+                input_cfg->channel,
+                supla_esp_gpio_relay_is_hi(input_cfg->relay_gpio_id));
+    }
+}
+
+void ICACHE_FLASH_ATTR supla_esp_board_gpio_on_input_active(void* _input_cfg)
+{
+
+    supla_input_cfg_t* input_cfg = (supla_input_cfg_t*)_input_cfg;
+
+ (input_cfg->type == INPUT_TYPE_BTN_BISTABLE || input_cfg->type == INPUT_TYPE_BTN_MONOSTABLE) {
+
+        // supla_log(LOG_DEBUG, "RELAY");
+        supla_esp_board_gpio_relay_switch(input_cfg, 255);
+
+ 
+    input_cfg->last_state = 1;
+}
+
+void ICACHE_FLASH_ATTR
+supla_esp_board_gpio_on_input_inactive(void* _input_cfg)
+{
+
+    supla_input_cfg_t* input_cfg = (supla_input_cfg_t*)_input_cfg;
+
+ (input_cfg->type == INPUT_TYPE_BTN_BISTABLE) {
+
+        supla_esp_board_gpio_relay_switch(input_cfg, 255);
+
+    } 
+
+    input_cfg->last_state = 0;
 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count) {
