@@ -198,7 +198,8 @@ case $1 in
    echo "              mk_gate_02";
    echo "              mk_gate_02_dht22";
    echo "              sonoff_led";
-   echo
+   echo "              sonoff_led_14";
+   echo 
    echo
    exit;
    ;;
