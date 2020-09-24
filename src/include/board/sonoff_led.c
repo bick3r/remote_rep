@@ -23,7 +23,7 @@
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_device_name(char *buffer, uint8 buffer_size) {
 	
-		ets_snprintf(buffer, buffer_size, "Sonoff led timer_1");
+		ets_snprintf(buffer, buffer_size, "Sonoff led timer");
 }
 char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
     char dev_name[25], const char mac[6], const char data_saved) {
@@ -119,6 +119,8 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       "connected</label></i><i><select name=\"upd\"><option value=\"0\" "
       "%s>NO<option value=\"1\" %s>YES</select><label>Firmware "
       "update</label></i></div><button "
+	  "<i><select name=\"bt1\"><option value=\"0\" %s>Monostable<option "
+      "value=\"1\" %s>Bistable</select><label>Button1 type:</label></i>"
       "type=\"submit\">SAVE</button></form></div><br><br>";
 
   int bufflen = strlen(supla_esp_devconn_laststate()) + strlen(dev_name) +
@@ -154,7 +156,9 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       supla_esp_cfg.StatusLedOff == 0 ? "selected" : "",
       supla_esp_cfg.StatusLedOff == 1 ? "selected" : "",
       supla_esp_cfg.FirmwareUpdate == 0 ? "selected" : "",
-      supla_esp_cfg.FirmwareUpdate == 1 ? "selected" : "");
+      supla_esp_cfg.FirmwareUpdate == 1 ? "selected" : ""),
+	  supla_esp_cfg.Button2Type == BTN_TYPE_MONOSTABLE ? "selected" : "",
+      supla_esp_cfg.Button2Type == BTN_TYPE_BISTABLE ? "selected" : ""
 
   return buffer;
 }
@@ -192,9 +196,8 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
   
 	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
 	
-        channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
-#endif
-}
+     channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
+	 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {
   supla_esp_gpio_set_led(supla_esp_cfg.StatusLedOff, 0, 0);
