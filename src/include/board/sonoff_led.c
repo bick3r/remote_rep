@@ -154,9 +154,7 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       supla_esp_cfg.StatusLedOff == 1 ? "selected" : "",
       //supla_esp_cfg.FirmwareUpdate == 0 ? "selected" : "",
       //supla_esp_cfg.FirmwareUpdate == 1 ? "selected" : ""),
-	  supla_esp_cfg.Button2Type == BTN_TYPE_MONOSTABLE ? "selected" : "",
-      supla_esp_cfg.Button2Type == BTN_TYPE_BISTABLE ? "selected" : ""
-
+	 
   return buffer;
 }
 
