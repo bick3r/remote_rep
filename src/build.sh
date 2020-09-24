@@ -149,10 +149,13 @@ case $1 in
       FOTA=0
    ;;
     "sonoff_led")
-	SPI_MODE="DOUT"
+      SPI_MODE="DOUT"
       FOTA=0
-   ;;
-    
+	;;
+	"sonoff_led_14")
+      SPI_MODE="DOUT"
+      FOTA=0
+	;;
    *)
    echo "Usage:"
    echo "       build.sh BOARD_TYPE";
@@ -195,7 +198,8 @@ case $1 in
    echo "              mk_gate_02";
    echo "              mk_gate_02_dht22";
    echo "              sonoff_led";
-   echo
+   echo "              sonoff_led_14";
+   echo 
    echo
    exit;
    ;;
