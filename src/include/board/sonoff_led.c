@@ -152,8 +152,8 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       supla_esp_cfg.Server, supla_esp_cfg.Email,
       supla_esp_cfg.StatusLedOff == 0 ? "selected" : "",
       supla_esp_cfg.StatusLedOff == 1 ? "selected" : "",
-      supla_esp_cfg.FirmwareUpdate == 0 ? "selected" : "",
-      supla_esp_cfg.FirmwareUpdate == 1 ? "selected" : ""),
+      //supla_esp_cfg.FirmwareUpdate == 0 ? "selected" : "",
+      //supla_esp_cfg.FirmwareUpdate == 1 ? "selected" : ""),
 	  supla_esp_cfg.Button2Type == BTN_TYPE_MONOSTABLE ? "selected" : "",
       supla_esp_cfg.Button2Type == BTN_TYPE_BISTABLE ? "selected" : ""
 
@@ -191,7 +191,7 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
 	channels[0].Default = SUPLA_CHANNELFNC_POWERSWITCH;
     channels[0].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;   //Timer
   
-	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
+	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy - poziom wifi itd...
 	
      channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
 	 }
