@@ -174,13 +174,7 @@ void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
     supla_relay_cfg[0].flags = RELAY_FLAG_RESTORE_FORCE;
     supla_relay_cfg[0].channel = 0;
     
-	channels[1].Number = 1;
-    channels[1].Type = SUPLA_CHANNELTYPE_DHT22;
-    channels[1].FuncList = 0;
-    channels[1].Default = 0;
-//    channels[4].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
-    supla_get_temp_and_humidity(channels[4].value);
-	
+		
 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count) {
@@ -200,6 +194,17 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
 	
      channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
 
+	 
+	channels[1].Number = 1;
+    channels[1].Type = SUPLA_CHANNELTYPE_DHT22;
+    channels[1].FuncList = 0;
+    channels[1].Default = 0;
+//    channels[4].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
+    supla_get_temp_and_humidity(channels[4].value); 
+	 
+	 
+	 
+	 
 	 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {
