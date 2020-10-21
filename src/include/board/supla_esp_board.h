@@ -93,6 +93,9 @@
 #elif defined(__BOARD_sonoff_led)
 #include "board/sonoff_led.h"
 
+#elif defined(__BOARD_sonoff_led_14)
+#include "board/sonoff_led_14.h"
+
 #elif defined(__BOARD_sonoff_led_ds)
 #include "board/sonoff_led_ds.h"
 
