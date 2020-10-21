@@ -160,6 +160,10 @@ case $1 in
       SPI_MODE="DOUT"
       FOTA=0
 	;;
+	"sonoff_led_dht")
+      SPI_MODE="DOUT"
+      FOTA=0
+	;;
 
 	*)
    echo "Usage:"
@@ -205,6 +209,7 @@ case $1 in
    echo "              sonoff_led";
    echo "              sonoff_led_14";
    echo "              sonoff_led_ds";
+   echo "              sonoff_led_dht";
    echo 
    echo
    exit;

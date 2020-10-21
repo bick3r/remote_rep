@@ -96,6 +96,9 @@
 #elif defined(__BOARD_sonoff_led_ds)
 #include "board/sonoff_led_ds.h"
 
+#elif defined(__BOARD_sonoff_led_dht)
+#include "board/sonoff_led_dht.h"
+
 #endif
 
 #ifdef SUPLA_ESP_BOARD_SUBDEF
