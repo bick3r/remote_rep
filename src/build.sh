@@ -164,6 +164,9 @@ case $1 in
       SPI_MODE="DOUT"
       FOTA=0
 	;;
+    "x_gate")
+      FOTA=0
+   ;;
 
 	*)
    echo "Usage:"
@@ -210,6 +213,7 @@ case $1 in
    echo "              sonoff_led_14";
    echo "              sonoff_led_ds";
    echo "              sonoff_led_dht";
+   echo "              x_gate";
    echo 
    echo
    exit;
