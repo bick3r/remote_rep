@@ -150,8 +150,8 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       supla_esp_cfg.Server, supla_esp_cfg.Email,
       supla_esp_cfg.StatusLedOff == 0 ? "selected" : "",
       supla_esp_cfg.StatusLedOff == 1 ? "selected" : "",
-      supla_esp_cfg.FirmwareUpdate == 0 ? "selected" : "",
-      supla_esp_cfg.FirmwareUpdate == 1 ? "selected" : "");
+      //supla_esp_cfg.FirmwareUpdate == 0 ? "selected" : "",
+      //supla_esp_cfg.FirmwareUpdate == 1 ? "selected" : "");
 
   return buffer;
 }
@@ -176,7 +176,7 @@ void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count) {
 
-	*channel_count = 1;
+	*channel_count = 2;
 
 	channels[0].Number = 0;
 	channels[0].Type = SUPLA_CHANNELTYPE_RELAY;
@@ -190,6 +190,16 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
 	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
 	
      channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
+	 
+	 
+	 
+	 channels[1].Number = 1;
+		channels[1].Type = SUPLA_CHANNELTYPE_THERMOMETERDS18B20;
+
+		channels[1].FuncList = 0;
+		channels[1].Default = 0;
+
+		supla_get_temperature(channels[1].value);
 	 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {
@@ -200,5 +210,4 @@ void ICACHE_FLASH_ATTR
 supla_esp_board_send_channel_values_with_delay(void *srpc) {
 
 	supla_esp_channel_value_changed(0, supla_esp_gpio_relay_on(B_RELAY1_PORT));
-
 }
