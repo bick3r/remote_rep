@@ -13,14 +13,15 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-
+#include "supla_esp.h"
+#include "supla_dht.h"
 
 #define B_RELAY1_PORT    12
 #define B_CFG_PORT        0
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_device_name(char *buffer, uint8 buffer_size) {
 	
-		ets_snprintf(buffer, buffer_size, "Sonoff led timer");
+		ets_snprintf(buffer, buffer_size, "Xeronika.pl");
 }
 char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
     char dev_name[25], const char mac[6], const char data_saved) {
@@ -176,7 +177,7 @@ void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count) {
 
-	*channel_count = 1;
+	*channel_count = 2;
 
 	channels[0].Number = 0;
 	channels[0].Type = SUPLA_CHANNELTYPE_RELAY;
@@ -190,6 +191,18 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
 	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
 	
      channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
+	 
+	 
+	 
+	 channels[1].Number = 1;
+ 	channels[1].Type = SUPLA_CHANNELTYPE_DHT22;
+    channels[1].FuncList = 0;
+    channels[1].Default = 0;
+//    channels[4].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
+    supla_get_temp_and_humidity(channels[1].value);
+	 
+	 
+	 
 	 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {
