@@ -16,11 +16,14 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef P_SONOFF_H_
-#define P_SONOFF_H_
+#ifndef SONOFF_led_ds_H_
+#define SONOFF_led_ds_H_
 
 #define ESP8285
 #define ESP8266_SUPLA_PROTO_VERSION 12 // 7
+#define DS18B20
+#define TEMPERATURE_CHANNEL 1
+#define W1_GPIO14
 #define LED_RED_PORT    13
 
 #define BOARD_ON_CONNECT  // LED CFG zgaszona przy normalnej pracy
