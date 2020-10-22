@@ -5,7 +5,7 @@
 #define B_RELAY1_PORT 5
 //#define B_RELAY2_PORT 13
 #define B_SENSOR1_PORT 12
-#define B_SENSOR2_PORT 9
+#define B_SENSOR2_PORT 14
 
 void supla_esp_board_set_device_name(char *buffer, uint8 buffer_size)
 { ets_snprintf(buffer, buffer_size, "Xeronika.pl - Gate");
@@ -61,7 +61,7 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
     channels[2].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
     
 
-    channels[3].Number = 4;
+    channels[3].Number = 3;
     channels[3].Type = SUPLA_CHANNELTYPE_DHT22;
     channels[3].FuncList = 0;
     channels[3].Default = 0;
