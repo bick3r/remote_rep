@@ -8,8 +8,8 @@
 #define B_SENSOR2_PORT 16
 
 void supla_esp_board_set_device_name(char *buffer, uint8 buffer_size)
-    ets_snprintf(buffer, buffer_size, "Xeronika.pl - Gate");
-
+{ ets_snprintf(buffer, buffer_size, "Xeronika.pl - Gate");
+}
 
 void supla_esp_board_gpio_init(void)
 {
