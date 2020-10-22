@@ -37,14 +37,16 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
     channels[0].Number = 0;
     channels[0].Type = SUPLA_CHANNELTYPE_SENSORNO;
     channels[0].FuncList = 0;
-    channels[0].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;
+	channels[1].Default = 0;
+//    channels[0].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;
     channels[0].value[0] = 0;
 //    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
     channels[1].Number = 1;
     channels[1].Type = SUPLA_CHANNELTYPE_SENSORNO;
     channels[1].FuncList = 0;
-    channels[1].Default = 0;
+//    channels[1].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;    
+	channels[1].Default = 0;
     channels[1].value[0] = 0;
 //    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
