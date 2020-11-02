@@ -52,7 +52,6 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
 void ICACHE_FLASH_ATTR supla_esp_board_send_channel_values_with_delay(void *srpc)
 {
     supla_esp_channel_value_changed(0, gpio__input_get(B_SENSOR1_PORT));
-    supla_esp_channel_value_changed(1, gpio__input_get(B_SENSOR2_PORT));
 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_on_cfg_saved(void)
