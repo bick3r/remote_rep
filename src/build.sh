@@ -171,6 +171,11 @@ case $1 in
       FOTA=0
 	  ;;
 
+	"x_sonoff_gate")
+      FOTA=0
+	  ;;
+  
+	  
 	*)
    echo "Usage:"
    echo "       build.sh BOARD_TYPE";
@@ -218,6 +223,7 @@ case $1 in
    echo "              sonoff_led_dht";
    echo "              x_gate";
    echo "              x_sonoff_mini";
+   echo "              x_sonoff_gate";
    echo 
    echo
    exit;
