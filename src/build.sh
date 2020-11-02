@@ -166,7 +166,10 @@ case $1 in
 	;;
     "x_gate")
       FOTA=0
-   ;;
+	;;
+    "x_sonoff_mini")
+      FOTA=0
+	  ;;
 
 	*)
    echo "Usage:"
@@ -214,6 +217,7 @@ case $1 in
    echo "              sonoff_led_ds";
    echo "              sonoff_led_dht";
    echo "              x_gate";
+   echo "              x_sonoff_mini";
    echo 
    echo
    exit;

@@ -105,6 +105,10 @@
 #elif defined(__BOARD_x_gate)
 #include "board/x_gate.h"
 
+#elif defined(__BOARD_x_sonoff_mini)
+#include "board/x_sonoff_mini.h"
+
+
 #endif
 
 #ifdef SUPLA_ESP_BOARD_SUBDEF
