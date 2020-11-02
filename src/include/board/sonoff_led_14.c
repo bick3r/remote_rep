@@ -160,10 +160,10 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
 
 void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
 
-//	supla_input_cfg[0].type = supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE         //menu bi/mono
- // 	      	? INPUT_TYPE_BTN_BISTABLE																		//menu bi/mono
- //       	: INPUT_TYPE_BTN_MONOSTABLE;																//menu bi/mono
-supla_input_cfg[0].type = INPUT_TYPE_BTN_MONOSTABLE;
+	supla_input_cfg[0].type = supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE         //menu bi/mono
+ 	      	? INPUT_TYPE_BTN_BISTABLE																		//menu bi/mono
+			: INPUT_TYPE_BTN_MONOSTABLE;																//menu bi/mono
+//supla_input_cfg[0].type = INPUT_TYPE_BTN_MONOSTABLE;
  supla_input_cfg[0].gpio_id = B_BUTTON_PORT;
 	supla_input_cfg[0].flags = INPUT_FLAG_PULLUP | INPUT_FLAG_CFG_BTN;
 	supla_input_cfg[0].relay_gpio_id = B_RELAY1_PORT;
