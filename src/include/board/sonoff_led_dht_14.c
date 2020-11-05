@@ -15,6 +15,7 @@
 
 #include "supla_esp.h"
 #include "supla_dht.h"
+#include "supla_ds18b20.h"
 
 #define B_RELAY1_PORT    12
 #define B_CFG_PORT        0
@@ -181,7 +182,7 @@ void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count) {
 
-	*channel_count = 2;
+	*channel_count = 3;
 
 	channels[0].Number = 0;
 	channels[0].Type = SUPLA_CHANNELTYPE_RELAY;
@@ -205,6 +206,12 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
 //    channels[1].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
     supla_get_temp_and_humidity(channels[1].value);
 	 
+	 
+	channels[2].Number = 2;
+    channels[2].Type = SUPLA_CHANNELTYPE_THERMOMETERDS18B20;
+    channels[2].FuncList = 0;
+    channels[2].Default = 0;
+    supla_get_temperature(channels[2].value);
 	 
 	 
 	 }
