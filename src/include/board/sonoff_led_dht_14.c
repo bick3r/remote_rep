@@ -199,7 +199,7 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
 	 
 	 
 	 
-	 channels[1].Number = 1;
+	channels[1].Number = 1;
  	channels[1].Type = SUPLA_CHANNELTYPE_DHT22;
     channels[1].FuncList = 0;
     channels[1].Default = 0;

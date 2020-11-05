@@ -28,7 +28,7 @@
 
 #define DS18B20
 #define TEMPERATURE_CHANNEL 2
-#define W1_GPIO14
+#define W1_GPIO3
 
 #define LED_RED_PORT    13
 
