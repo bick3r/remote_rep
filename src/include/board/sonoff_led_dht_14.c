@@ -166,11 +166,11 @@ void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
 	supla_input_cfg[0].type;
 if (supla_esp_cfg.CfgButtonType == BTN_TYPE_BISTABLE)
 {
-supla_input_cfg[0].type = INPUT_TYPE_BTN_BISTABLE
+supla_input_cfg[0].type = INPUT_TYPE_BTN_BISTABLE;
 }
 else 
 {
-supla_input_cfg[0].type = INPUT_TYPE_BTN_MONOSTABLE
+supla_input_cfg[0].type = INPUT_TYPE_BTN_MONOSTABLE;
 }
 
 
