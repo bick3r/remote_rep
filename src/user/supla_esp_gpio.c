@@ -1099,7 +1099,8 @@ supla_esp_gpio_init(void) {
 	GPIO_PORT_INIT;
 	ETS_GPIO_INTR_ATTACH(supla_esp_gpio_intr_handler, NULL);
 
-    #ifdef USE_GPIO16_INPUT
+    
+	#ifdef USE_GPIO16_INPUT
 	gpio16_input_conf();
     #endif
 
@@ -1111,8 +1112,13 @@ supla_esp_gpio_init(void) {
     #ifdef USE_GPIO3
 	   PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0RXD_U, FUNC_GPIO3);
 	   PIN_PULLUP_DIS(PERIPHS_IO_MUX_U0RXD_U);
-    #endif
+	   #endif
 
+	#ifdef USE_GPIO1_INPUT
+		PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0TXD_U, FUNC_GPIO1);
+		PIN_PULLUP_EN(PERIPHS_IO_MUX_U0TXD_U);
+	#endif   
+	   
     #ifdef USE_GPIO1
 	   PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0TXD_U, FUNC_GPIO1);
 	   PIN_PULLUP_DIS(PERIPHS_IO_MUX_U0TXD_U);
