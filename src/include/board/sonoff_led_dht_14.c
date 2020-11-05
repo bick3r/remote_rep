@@ -202,7 +202,7 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
  	channels[1].Type = SUPLA_CHANNELTYPE_DHT22;
     channels[1].FuncList = 0;
     channels[1].Default = 0;
-//    channels[4].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
+//    channels[1].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
     supla_get_temp_and_humidity(channels[1].value);
 	 
 	 
