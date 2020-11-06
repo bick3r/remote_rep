@@ -37,9 +37,10 @@
 #define BOARD_CFG_HTML_TEMPLATE // nowy config z LED ON/OFF
 
 char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
-char dev_name[25], const char mac[6], const char data_saved); // nowy config z LED ON/OFF
-void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void); //LED CFG zgaszona podczas normalnej pracy
-void ICACHE_FLASH_ATTR supla_esp_board_send_channel_values_with_delay(void *srpc);
+    char dev_name[25], const char mac[6], const char data_saved);
+void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void);
+void ICACHE_FLASH_ATTR
+supla_esp_board_send_channel_values_with_delay(void *srpc);
 
 #endif
 
