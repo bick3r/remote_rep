@@ -172,6 +172,7 @@ case $1 in
       FOTA=0
 	;;
     "x_sonoff_mini")
+      SPI_MODE="DOUT"
       FOTA=0
 	  ;;
 
