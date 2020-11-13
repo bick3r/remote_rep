@@ -1091,7 +1091,7 @@ supla_esp_gpio_init(void) {
 	}
 
 	#if defined(USE_GPIO3) ||  defined(USE_GPIO1) || defined(UART_SWAP)
-		 system_uart_swap ();
+//		 system_uart_swap ();
 	#endif
 
 	ETS_GPIO_INTR_DISABLE();
