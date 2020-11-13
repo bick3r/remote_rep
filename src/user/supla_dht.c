@@ -48,6 +48,8 @@ supla_dht_read_th(void *timer_arg) {
 	
 	#ifdef W1_GPIO0
 	  sensor.port = 0;
+	#elif defined(W1_GPIO3)
+	  sensor.port = 3;
 	#elif defined(W1_GPIO5)
 	  sensor.port = 5;
 	#elif defined(W1_GPIO14)
