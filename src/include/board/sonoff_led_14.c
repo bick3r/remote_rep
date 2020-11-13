@@ -18,7 +18,7 @@
 
 #define B_RELAY1_PORT    12
 #define B_CFG_PORT        0
-#define B_BUTTON_PORT    3
+#define B_BUTTON_PORT    14
 
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_device_name(char *buffer, uint8 buffer_size) {
