@@ -156,7 +156,32 @@ case $1 in
       SPI_MODE="DOUT"
       FOTA=0
 	;;
-   *)
+	"sonoff_led_ds")
+      SPI_MODE="DOUT"
+      FOTA=0
+	;;
+	"sonoff_led_dht")
+      SPI_MODE="DOUT"
+      FOTA=0
+	;;
+	"sonoff_led_dht_14")
+      SPI_MODE="DOUT"
+      FOTA=0
+	;;
+    "x_gate")
+      FOTA=0
+	;;
+    "x_sonoff_mini")
+      SPI_MODE="DOUT"
+      FOTA=0
+	  ;;
+
+	"x_sonoff_gate")
+      FOTA=0
+	  ;;
+  
+	  
+	*)
    echo "Usage:"
    echo "       build.sh BOARD_TYPE";
    echo "--------------------------";
@@ -199,6 +224,12 @@ case $1 in
    echo "              mk_gate_02_dht22";
    echo "              sonoff_led";
    echo "              sonoff_led_14";
+   echo "              sonoff_led_ds";
+   echo "              sonoff_led_dht";
+   echo "              sonoff_led_dht_14";
+   echo "              x_gate";
+   echo "              x_sonoff_mini";
+   echo "              x_sonoff_gate";
    echo 
    echo
    exit;

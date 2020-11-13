@@ -15,11 +15,11 @@
 
 #include "supla_esp.h"
 #include "supla_dht.h"
+#include "supla_ds18b20.h"
 
 #define B_RELAY1_PORT    12
 #define B_CFG_PORT        0
 #define B_BUTTON_PORT    14
-
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_device_name(char *buffer, uint8 buffer_size) {
 	
@@ -116,11 +116,11 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       "class=\"w\"><h3>Additional Settings</h3><i><select name=\"led\"><option "
       "value=\"0\" %s>LED "
       "ON<option value=\"1\" %s>LED OFF</select><label>Status - "
-      "connected</label></i>" 
+      "connected</label></i>"
 	  "<i><select name=\"bt1\"><option value=\"0\" %s>Monostable<option "         	//menu bi/mono
       "value=\"1\" %s>Bistable</select><label>Button1 type:</label></i>"				//menu bi/mono
 	  "</div><button type=\"submit\">SAVE</button></form></div><br><br>";		//menu bi/mono
-
+  
   int bufflen = strlen(supla_esp_devconn_laststate()) + strlen(dev_name) +
                 strlen(SUPLA_ESP_SOFTVER) + strlen(supla_esp_cfg.WIFI_SSID) +
                 strlen(supla_esp_cfg.Server) + strlen(supla_esp_cfg.Email) +
@@ -157,13 +157,14 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
       supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE ? "selected" : ""			//menu bi/mono
 	);
  return buffer;
- }
+}
 
 void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
 
 	supla_input_cfg[0].type = supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE         //menu bi/mono
- 	      	? INPUT_TYPE_BTN_BISTABLE																		//menu bi/mono
-			: INPUT_TYPE_BTN_MONOSTABLE;																//menu bi/mono
+ 	    	? INPUT_TYPE_BTN_BISTABLE : INPUT_TYPE_BTN_MONOSTABLE;
+
+
 	supla_input_cfg[0].gpio_id = B_BUTTON_PORT;
 	supla_input_cfg[0].flags = INPUT_FLAG_PULLUP | INPUT_FLAG_CFG_BTN;
 	supla_input_cfg[0].relay_gpio_id = B_RELAY1_PORT;
@@ -175,29 +176,44 @@ void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
     supla_relay_cfg[0].gpio_id = B_RELAY1_PORT;
     supla_relay_cfg[0].flags = RELAY_FLAG_RESTORE_FORCE;
     supla_relay_cfg[0].channel = 0;
-   
+    
+
 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count) {
 
-	*channel_count = 2;
+	*channel_count = 3;
 
 	channels[0].Number = 0;
 	channels[0].Type = SUPLA_CHANNELTYPE_RELAY;
+
 	channels[0].FuncList = SUPLA_BIT_FUNC_POWERSWITCH \
 								| SUPLA_BIT_FUNC_LIGHTSWITCH;
 
 	channels[0].Default = SUPLA_CHANNELFNC_POWERSWITCH;
     channels[0].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;   //Timer
-  	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
-	channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
+  
+	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
+	
+     channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
 	 
 	 
-    channels[1].Number = 1;
+	 
+	channels[1].Number = 1;
  	channels[1].Type = SUPLA_CHANNELTYPE_DHT22;
     channels[1].FuncList = 0;
     channels[1].Default = 0;
+//    channels[1].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
     supla_get_temp_and_humidity(channels[1].value);
+	 
+	 
+	channels[2].Number = 2;
+    channels[2].Type = SUPLA_CHANNELTYPE_THERMOMETERDS18B20;
+    channels[2].FuncList = 0;
+    channels[2].Default = 0;
+    supla_get_temperature(channels[2].value);
+	 
+	 
 	 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {
