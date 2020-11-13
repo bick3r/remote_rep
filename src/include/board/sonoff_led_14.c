@@ -184,23 +184,19 @@ void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *ch
 
 	channels[0].Number = 0;
 	channels[0].Type = SUPLA_CHANNELTYPE_RELAY;
-
 	channels[0].FuncList = SUPLA_BIT_FUNC_POWERSWITCH \
 								| SUPLA_BIT_FUNC_LIGHTSWITCH;
 
 	channels[0].Default = SUPLA_CHANNELFNC_POWERSWITCH;
     channels[0].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;   //Timer
-  
-	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
-	
-     channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
+  	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
+	channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
 	 
 	 
-	  channels[1].Number = 1;
+    channels[1].Number = 1;
  	channels[1].Type = SUPLA_CHANNELTYPE_DHT22;
     channels[1].FuncList = 0;
     channels[1].Default = 0;
-//    channels[4].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
     supla_get_temp_and_humidity(channels[1].value);
 	 }
 
