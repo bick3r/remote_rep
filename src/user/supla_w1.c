@@ -56,7 +56,7 @@ void ICACHE_FLASH_ATTR supla_w1_init(void) {
 		PIN_PULLUP_EN(PERIPHS_IO_MUX_GPIO5_U);
 	#elif defined(W1_GPIO3)
 
-	    system_uart_swap ();
+//	    system_uart_swap ();
 
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0RXD_U, FUNC_GPIO3);
 		PIN_PULLUP_EN(PERIPHS_IO_MUX_U0RXD_U);
