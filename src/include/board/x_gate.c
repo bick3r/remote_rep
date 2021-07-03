@@ -76,12 +76,12 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
     channels[3].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
 
-    channels[4].Number = 3;
-    channels[4].Type = SUPLA_CHANNELTYPE_DHT22;
-    channels[4].FuncList = 0;
-    channels[4].Default = 0;
+//    channels[4].Number = 3;
+//    channels[4].Type = SUPLA_CHANNELTYPE_DHT22;
+//   channels[4].FuncList = 0;
+//    channels[4].Default = 0;
 //    channels[4].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
-    supla_get_temp_and_humidity(channels[3].value);
+//    supla_get_temp_and_humidity(channels[3].value);
 }
 
 
