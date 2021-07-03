@@ -13,37 +13,37 @@ void supla_esp_board_set_device_name(char *buffer, uint8 buffer_size)
 
 void supla_esp_board_gpio_init(void)
 {
-    supla_input_cfg[0].type = supla_esp_cfg.CfgButtonType == BTN_TYPE_BISTABLE ? INPUT_TYPE_BTN_BISTABLE : INPUT_TYPE_BTN_MONOSTABLE;
-    supla_input_cfg[0].gpio_id = B_CFG_PORT;
-    supla_input_cfg[0].flags = INPUT_FLAG_PULLUP | INPUT_FLAG_CFG_BTN;
+\\    supla_input_cfg[0].type = supla_esp_cfg.CfgButtonType == BTN_TYPE_BISTABLE ? INPUT_TYPE_BTN_BISTABLE : INPUT_TYPE_BTN_MONOSTABLE;
+\\    supla_input_cfg[0].gpio_id = B_CFG_PORT;
+\\    supla_input_cfg[0].flags = INPUT_FLAG_PULLUP | INPUT_FLAG_CFG_BTN;
+
+    supla_input_cfg[0].type = INPUT_TYPE_SENSOR;
+    supla_input_cfg[0].gpio_id = B_SENSOR1_PORT;
+    supla_input_cfg[0].channel = 1;
 
     supla_input_cfg[1].type = INPUT_TYPE_SENSOR;
-    supla_input_cfg[1].gpio_id = B_SENSOR1_PORT;
-    supla_input_cfg[1].channel = 0;
+    supla_input_cfg[1].gpio_id = B_SENSOR2_PORT;
+    supla_input_cfg[1].channel = 2;
 
-    supla_input_cfg[2].type = INPUT_TYPE_SENSOR;
-    supla_input_cfg[2].gpio_id = B_SENSOR2_PORT;
-    supla_input_cfg[2].channel = 1;
+    supla_relay_cfg[0].gpio_id = B_RELAY1_PORT;
+    supla_relay_cfg[0].flags = RELAY_FLAG_RESET;
+    supla_relay_cfg[0].channel = 0;
 
-    supla_relay_cfg[3].gpio_id = B_RELAY1_PORT;
-    supla_relay_cfg[3].flags = RELAY_FLAG_RESET;
-    supla_relay_cfg[3].channel = 2;
-
-    supla_relay_cfg[4].gpio_id = B_RELAY1_PORT;
-    supla_relay_cfg[4].flags = RELAY_FLAG_RESET;
-    supla_relay_cfg[4].channel = 2;
+    supla_relay_cfg[1].gpio_id = B_RELAY1_PORT;
+    supla_relay_cfg[1].flags = RELAY_FLAG_RESET;
+    supla_relay_cfg[1].channel = 1;
 
 }
 
 void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count)
 {
-    *channel_count = 5;
+    *channel_count = 4;
 
     channels[0].Number = 0;
     channels[0].Type = SUPLA_CHANNELTYPE_SENSORNO;
     channels[0].FuncList = 0;
     channels[0].Default = 0;
-//    channels[0].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;
+    channels[0].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;
     channels[0].value[0] = 0;
 //    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
@@ -55,6 +55,7 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
     channels[1].value[0] = 0;
 //    channels[1].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
+
     channels[2].Number = 2;
     channels[2].Type = SUPLA_CHANNELTYPE_RELAY;
     channels[2].FuncList = SUPLA_BIT_FUNC_CONTROLLINGTHEGATEWAYLOCK \
@@ -64,8 +65,9 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
     channels[2].Default = 2;
     channels[2].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
     channels[2].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
+
     
-    channels[3].Number = 2;
+    channels[3].Number = 3;
     channels[3].Type = SUPLA_CHANNELTYPE_RELAY;
     channels[3].FuncList = SUPLA_BIT_FUNC_CONTROLLINGTHEGATEWAYLOCK \
                          | SUPLA_BIT_FUNC_CONTROLLINGTHEGATE \
