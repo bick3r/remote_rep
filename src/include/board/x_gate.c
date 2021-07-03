@@ -2,13 +2,13 @@
 #include "supla_dht.h"
 
 #define B_CFG_PORT 0
-#define B_RELAY1_PORT 5
-//#define B_RELAY2_PORT 13
-#define B_SENSOR1_PORT 12
-#define B_SENSOR2_PORT 14
+#define B_RELAY1_PORT 12
+#define B_RELAY2_PORT 13
+#define B_SENSOR1_PORT 4
+#define B_SENSOR2_PORT 5
 
 void supla_esp_board_set_device_name(char *buffer, uint8 buffer_size)
-{ ets_snprintf(buffer, buffer_size, "Xeronika.pl - Gate");
+{ ets_snprintf(buffer, buffer_size, "Mysi Garaz");
 }
 
 void supla_esp_board_gpio_init(void)
@@ -25,19 +25,24 @@ void supla_esp_board_gpio_init(void)
     supla_input_cfg[2].gpio_id = B_SENSOR2_PORT;
     supla_input_cfg[2].channel = 1;
 
-    supla_relay_cfg[0].gpio_id = B_RELAY1_PORT;
-    supla_relay_cfg[0].flags = RELAY_FLAG_RESET;
-    supla_relay_cfg[0].channel = 2;
+    supla_relay_cfg[3].gpio_id = B_RELAY1_PORT;
+    supla_relay_cfg[3].flags = RELAY_FLAG_RESET;
+    supla_relay_cfg[3].channel = 2;
+
+    supla_relay_cfg[4].gpio_id = B_RELAY1_PORT;
+    supla_relay_cfg[4].flags = RELAY_FLAG_RESET;
+    supla_relay_cfg[4].channel = 2;
+
 }
 
 void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count)
 {
-    *channel_count = 4;
+    *channel_count = 5;
 
     channels[0].Number = 0;
     channels[0].Type = SUPLA_CHANNELTYPE_SENSORNO;
     channels[0].FuncList = 0;
-	channels[1].Default = 0;
+    channels[0].Default = 0;
 //    channels[0].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;
     channels[0].value[0] = 0;
 //    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
@@ -48,7 +53,7 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
 //    channels[1].Default = SUPLA_CHANNELFNC_OPENINGSENSOR_GATE;    
 	channels[1].Default = 0;
     channels[1].value[0] = 0;
-//    channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
+//    channels[1].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
     channels[2].Number = 2;
     channels[2].Type = SUPLA_CHANNELTYPE_RELAY;
@@ -56,18 +61,29 @@ void supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned c
                          | SUPLA_BIT_FUNC_CONTROLLINGTHEGATE \
                          | SUPLA_BIT_FUNC_CONTROLLINGTHEGARAGEDOOR \
                          | SUPLA_BIT_FUNC_CONTROLLINGTHEDOORLOCK;
-    channels[2].Default = 0;
+    channels[2].Default = 2;
     channels[2].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
     channels[2].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
     
+    channels[3].Number = 2;
+    channels[3].Type = SUPLA_CHANNELTYPE_RELAY;
+    channels[3].FuncList = SUPLA_BIT_FUNC_CONTROLLINGTHEGATEWAYLOCK \
+                         | SUPLA_BIT_FUNC_CONTROLLINGTHEGATE \
+                         | SUPLA_BIT_FUNC_CONTROLLINGTHEGARAGEDOOR \
+                         | SUPLA_BIT_FUNC_CONTROLLINGTHEDOORLOCK;
+    channels[3].Default = 3;
+    channels[3].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
+    channels[3].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
 
-    channels[3].Number = 3;
-    channels[3].Type = SUPLA_CHANNELTYPE_DHT22;
-    channels[3].FuncList = 0;
-    channels[3].Default = 0;
+
+    channels[4].Number = 3;
+    channels[4].Type = SUPLA_CHANNELTYPE_DHT22;
+    channels[4].FuncList = 0;
+    channels[4].Default = 0;
 //    channels[4].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE;
     supla_get_temp_and_humidity(channels[3].value);
-	}
+}
+
 
 void ICACHE_FLASH_ATTR supla_esp_board_send_channel_values_with_delay(void *srpc)
 {
