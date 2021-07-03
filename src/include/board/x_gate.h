@@ -5,8 +5,8 @@
 #define ESP8266_SUPLA_PROTO_VERSION 12
 
 //#if defined(__BOARD_mk_gate_02_dht22)
-#define DHTSENSOR
-#define TEMPERATURE_HUMIDITY_CHANNEL 4
+//#define DHTSENSOR
+//#define TEMPERATURE_HUMIDITY_CHANNEL 4
 //#else
 //#define DS18B20
 //#define TEMPERATURE_CHANNEL 4
