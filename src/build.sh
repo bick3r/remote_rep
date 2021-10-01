@@ -22,7 +22,7 @@ NOSSL=0
 SPI_MODE="DIO"
 BOARD_SELECTED=0
 
-export PATH=/hdd2/Espressif/xtensa-lx106-elf/bin:$PATH
+export PATH=/hdd2/Espressif/sdk_1x/xtensa-lx106-elf/bin:$PATH
 export COMPILE=gcc
 
 if [ -e ./build_include.sh ]; then
@@ -156,7 +156,32 @@ case $1 in
       SPI_MODE="DOUT"
       FOTA=0
 	;;
-   *)
+	"sonoff_led_ds")
+      SPI_MODE="DOUT"
+      FOTA=0
+	;;
+	"sonoff_led_dht")
+      SPI_MODE="DOUT"
+      FOTA=0
+	;;
+	"sonoff_led_dht_14")
+      SPI_MODE="DOUT"
+      FOTA=0
+	;;
+    "x_gate")
+      FOTA=0
+	;;
+    "x_sonoff_mini")
+      SPI_MODE="DOUT"
+      FOTA=0
+	  ;;
+
+	"x_sonoff_gate")
+      FOTA=0
+	  ;;
+  
+	  
+	*)
    echo "Usage:"
    echo "       build.sh BOARD_TYPE";
    echo "--------------------------";
@@ -199,6 +224,12 @@ case $1 in
    echo "              mk_gate_02_dht22";
    echo "              sonoff_led";
    echo "              sonoff_led_14";
+   echo "              sonoff_led_ds";
+   echo "              sonoff_led_dht";
+   echo "              sonoff_led_dht_14";
+   echo "              x_gate";
+   echo "              x_sonoff_mini";
+   echo "              x_sonoff_gate";
    echo 
    echo
    exit;
@@ -227,16 +258,12 @@ case $FLASH_SIZE in
 esac
 
 OUTDIR=../firmware
-export SDK_PATH=/hdd2/Espressif/ESP8266_NONOS_SDK154
-export BIN_PATH=/hdd2/Espressif/ESP8266_BIN154
+export SDK_PATH=/hdd2/Espressif/sdk_1x/ESP8266_NONOS_SDK154
+export BIN_PATH=/hdd2/Espressif/sdk_1x/ESP8266_BIN154
 LD_DIR=sdk154
 
-#export SDK_PATH=/hdd2/Espressif/ESP8266_NONOS_SDK210
-#export BIN_PATH=/hdd2/Espressif/ESP8266_NONOS_SDK210
-#LD_DIR=sdk210
-
-
 make clean
+find ./ -type d -name ".output" -exec rm -rf {} +
 
 BOARD_NAME=$1
 
@@ -272,7 +299,7 @@ if [ "$FOTA" -eq 1 ]; then
   esac
 
    make SUPLA_DEP_LIBS="$DEP_LIBS" FOTA="$FOTA" BOARD=$1 CFG_SECTOR="$CFG_SECTOR" BOOT=new APP="$APP" SPI_SPEED=40 SPI_MODE="$SPI_MODE" SPI_SIZE_MAP="$SPI_SIZE_MAP" __EXTRA_CCFLAGS="$EXTRA_CCFLAGS" && \
-   cp $BIN_PATH/upgrade/user"$APP"."$FLASH_SIZE".new."$SPI_SIZE_MAP".bin "$OUTDIR"/"$BOARD_NAME"_user"$APP"."$FLASH_SIZE"_"$SPI_MODE".new."$SPI_SIZE_MAP".bin && \
+   cp $BIN_PATH/upgrade/user"$APP"."$FLASH_SIZE".new."$SPI_SIZE_MAP".bin "$OUTDIR"/"$BOARD_NAME"_user"$APP"."$FLASH_SIZE"_"$SPI_MODE".new."${SPI_SIZE_MAP}${OUTPUT_FILENAME_SUFFIX}".bin && \
    cp $SDK_PATH/bin/boot_v1.5.bin $OUTDIR/boot_v1.5.bin
 
 else

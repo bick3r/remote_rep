@@ -998,6 +998,7 @@ supla_esp_channel_set_value(TSD_SuplaChannelNewValue *new_value) {
 		if ( ColorBrightness > 100 )
 			ColorBrightness = 0;
 
+        #ifndef DONT_SAVE_STATE
 		if (new_value->ChannelNumber < RS_MAX_COUNT) {
 			#ifdef RGBW_ONOFF_SUPPORT
 			if ( new_value->ChannelNumber == rgb_cn ) {
@@ -1048,6 +1049,7 @@ supla_esp_channel_set_value(TSD_SuplaChannelNewValue *new_value) {
 			}
 			#endif /*RGBW_ONOFF_SUPPORT*/
 		}
+        #endif /*DONT_SAVE_STATE*/
 
 		#ifdef RGBW_ONOFF_SUPPORT
 		   supla_esp_channel_set_rgbw_value(new_value->ChannelNumber, Color, ColorBrightness, Brightness, TurnOnOff, 1, 1);
@@ -1178,19 +1180,20 @@ supla_esp_channel_set_value(TSD_SuplaChannelNewValue *new_value) {
 }
 
 #if ESP8266_SUPLA_PROTO_VERSION >= 13
-void DEVCONN_ICACHE_FLASH
-supla_esp_channel_set_value_b(TSD_SuplaChannelNewValue_B *new_value_b) {
-#ifdef BOARD_ON_CHANNEL_VALUE_SET_B
-  BOARD_ON_CHANNEL_VALUE_SET_B
-#endif /*BOARD_ON_CHANNEL_VALUE_SET_B*/
+void DEVCONN_ICACHE_FLASH supla_esp_channelgroup_set_value(
+    TSD_SuplaChannelGroupNewValue *cg_new_value) {
+#ifdef BOARD_ON_CHANNELGROUP_VALUE_SET
+  BOARD_ON_CHANNELGROUP_VALUE_SET
+#endif /*BOARD_ON_CHANNELGROUP_VALUE_SET*/
 
   TSD_SuplaChannelNewValue new_value;
   memset(&new_value, 0, sizeof(TSD_SuplaChannelNewValue));
 
-  new_value.SenderID = new_value_b->SenderID;
-  new_value.ChannelNumber = new_value_b->ChannelNumber;
-  new_value.DurationMS = new_value_b->DurationMS;
-  memcpy(new_value.value, new_value_b->value, SUPLA_CHANNELVALUE_SIZE);
+  // Do not pass the SenderID to TSD_SuplaChannelNewValue
+  new_value.SenderID = 0;
+  new_value.ChannelNumber = cg_new_value->ChannelNumber;
+  new_value.DurationMS = cg_new_value->DurationMS;
+  memcpy(new_value.value, cg_new_value->value, SUPLA_CHANNELVALUE_SIZE);
 
   supla_esp_channel_set_value(&new_value);
 }
@@ -1203,7 +1206,6 @@ void DEVCONN_ICACHE_FLASH supla_esp_set_channel_result(
                                      Success);
   }
 }
-
 
 #if ESP8266_SUPLA_PROTO_VERSION >= 12 || defined(CHANNEL_STATE_TOOLS)
 void DEVCONN_ICACHE_FLASH
@@ -1312,8 +1314,8 @@ void DEVCONN_ICACHE_FLASH supla_esp_on_remote_call_received(
         supla_esp_channel_set_value(rd.data.sd_channel_new_value);
         break;
 #if ESP8266_SUPLA_PROTO_VERSION >= 13
-      case SUPLA_SD_CALL_CHANNEL_SET_VALUE_B:
-        supla_esp_channel_set_value_b(rd.data.sd_channel_new_value_b);
+      case SUPLA_SD_CALL_CHANNELGROUP_SET_VALUE:
+        supla_esp_channelgroup_set_value(rd.data.sd_channelgroup_new_value);
         break;
 #endif /*ESP8266_SUPLA_PROTO_VERSION >= 13*/
       case SUPLA_SDC_CALL_SET_ACTIVITY_TIMEOUT_RESULT:

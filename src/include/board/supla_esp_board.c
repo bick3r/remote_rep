@@ -92,6 +92,24 @@
 #elif defined(__BOARD_sonoff_led_14) 
 #include "board/sonoff_led_14.c"
 
+#elif defined(__BOARD_sonoff_led_ds) 
+#include "board/sonoff_led_ds.c"
+
+#elif defined(__BOARD_sonoff_led_dht) 
+#include "board/sonoff_led_dht.c"
+
+#elif defined(__BOARD_sonoff_led_dht_14) 
+#include "board/sonoff_led_dht_14.c"
+
+#elif defined(__BOARD_x_gate) 
+#include "board/x_gate.c"
+
+#elif defined(__BOARD_x_sonoff_mini) 
+#include "board/x_sonoff_mini.c"
+
+#elif defined(__BOARD_x_sonoff_gate) 
+#include "board/x_sonoff_gate.c"
+
 #endif
 
 #ifdef SUPLA_ESP_BOARD_SUBDEF

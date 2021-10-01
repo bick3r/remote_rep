@@ -13,12 +13,11 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#include "supla_esp.h"
-#include "supla_dht.h"
+
 
 #define B_RELAY1_PORT    12
 #define B_CFG_PORT        0
-#define B_BUTTON_PORT    14
+#define B_BUTTON_PORT     4
 
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_device_name(char *buffer, uint8 buffer_size) {
@@ -161,10 +160,10 @@ char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
 
 void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
 
-	supla_input_cfg[0].type = supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE         //menu bi/mono
- 	      	? INPUT_TYPE_BTN_BISTABLE																		//menu bi/mono
-			: INPUT_TYPE_BTN_MONOSTABLE;																//menu bi/mono
-	supla_input_cfg[0].gpio_id = B_BUTTON_PORT;
+supla_input_cfg[0].type = supla_esp_cfg.Button1Type == BTN_TYPE_BISTABLE         //menu bi/mono
+  	      	? INPUT_TYPE_BTN_BISTABLE																		//menu bi/mono
+        	: INPUT_TYPE_BTN_MONOSTABLE;																//menu bi/mono
+supla_input_cfg[0].gpio_id = B_BUTTON_PORT;
 	supla_input_cfg[0].flags = INPUT_FLAG_PULLUP | INPUT_FLAG_CFG_BTN;
 	supla_input_cfg[0].relay_gpio_id = B_RELAY1_PORT;
 	supla_input_cfg[0].channel = 0;
@@ -180,24 +179,20 @@ void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_channels(TDS_SuplaDeviceChannel_C *channels, unsigned char *channel_count) {
 
-	*channel_count = 2;
+	*channel_count = 1;
 
 	channels[0].Number = 0;
 	channels[0].Type = SUPLA_CHANNELTYPE_RELAY;
+
 	channels[0].FuncList = SUPLA_BIT_FUNC_POWERSWITCH \
 								| SUPLA_BIT_FUNC_LIGHTSWITCH;
 
 	channels[0].Default = SUPLA_CHANNELFNC_POWERSWITCH;
     channels[0].Flags |= SUPLA_CHANNEL_FLAG_COUNTDOWN_TIMER_SUPPORTED;   //Timer
-  	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
-	channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
-	 
-	 
-    channels[1].Number = 1;
- 	channels[1].Type = SUPLA_CHANNELTYPE_DHT22;
-    channels[1].FuncList = 0;
-    channels[1].Default = 0;
-    supla_get_temp_and_humidity(channels[1].value);
+  
+	channels[0].Flags |= SUPLA_CHANNEL_FLAG_CHANNELSTATE; // Nowy poziom wifi itd...
+	
+     channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
 	 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void) {

@@ -16,20 +16,22 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef P_SONOFF_H_
-#define P_SONOFF_H_
+#ifndef MOCK_UART_H_
+#define MOCK_UART_H_
 
-#define ESP8285
-#define ESP8266_SUPLA_PROTO_VERSION 12 // 7
-#define LED_RED_PORT    13
+#include <c_types.h>
 
-#define BOARD_ON_CONNECT  // LED CFG zgaszona przy normalnej pracy
-#define BOARD_CFG_HTML_TEMPLATE // nowy config z LED ON/OFF
-
-
-char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
-    char dev_name[25], const char mac[6], const char data_saved);
-void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void);
-void ICACHE_FLASH_ATTR
-supla_esp_board_send_channel_values_with_delay(void *srpc);
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+void rx_buff_set_ptr(char* pdata, uint16 size);
+void tx_buff_set_ptr(char* pdata, uint16 size, uint16** pos);
+uint16 rx_buff_deq(char* pdata, uint16 data_len);
+void tx_buff_enq(char* pdata, uint16 data_len);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /*MOCK_UART_H_*/

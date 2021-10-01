@@ -16,20 +16,27 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef P_SONOFF_H_
-#define P_SONOFF_H_
+#include "uptime.h"
+#include <sys/time.h>
+#include <string.h>
 
-#define ESP8285
-#define ESP8266_SUPLA_PROTO_VERSION 12 // 7
-#define LED_RED_PORT    13
+unsigned _supla_int64_t uptime_start_usec = 0;
 
-#define BOARD_ON_CONNECT  // LED CFG zgaszona przy normalnej pracy
-#define BOARD_CFG_HTML_TEMPLATE // nowy config z LED ON/OFF
+unsigned _supla_int64_t uptime_usec(void) {
+  struct timeval now;
+  gettimeofday(&now, NULL);
 
+  if (uptime_start_usec == 0) {
+    uptime_start_usec = now.tv_sec * 1000000 + now.tv_usec - 1000000;
+  }
 
-char *ICACHE_FLASH_ATTR supla_esp_board_cfg_html_template(
-    char dev_name[25], const char mac[6], const char data_saved);
-void ICACHE_FLASH_ATTR supla_esp_board_on_connect(void);
-void ICACHE_FLASH_ATTR
-supla_esp_board_send_channel_values_with_delay(void *srpc);
-#endif
+  return now.tv_sec * 1000000 + now.tv_usec - uptime_start_usec;
+}
+
+unsigned _supla_int64_t uptime_msec(void) {
+  return uptime_usec() / (unsigned _supla_int64_t)1000;
+}
+
+uint32 uptime_sec(void) {
+  return uptime_msec() / (unsigned _supla_int64_t)1000;
+}

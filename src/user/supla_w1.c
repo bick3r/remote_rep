@@ -26,6 +26,8 @@
 
 #ifdef W1_GPIO0
   int supla_w1_pin = GPIO_ID_PIN(0);
+#elif defined(W1_GPIO1)
+  int supla_w1_pin = GPIO_ID_PIN(1); // nowy dla TX
 #elif defined(W1_GPIO4)
   int supla_w1_pin = GPIO_ID_PIN(4);
 #elif defined(W1_GPIO5)
@@ -43,7 +45,10 @@ void ICACHE_FLASH_ATTR supla_w1_init(void) {
 	#ifdef W1_GPIO0
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO0_U, FUNC_GPIO0);
 		PIN_PULLUP_EN(PERIPHS_IO_MUX_GPIO0_U);
-    	#elif defined(W1_GPIO4)
+    	#elif defined(W1_GPIO1)
+		PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0TXD_U, FUNC_GPIO1); // nowy dla TX
+		PIN_PULLUP_EN(PERIPHS_IO_MUX_U0TXD_U); // nowy dla TX
+        #elif defined(W1_GPIO4)
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO4_U, FUNC_GPIO4);
 		PIN_PULLUP_EN(PERIPHS_IO_MUX_GPIO4_U);
     	#elif defined(W1_GPIO5)
@@ -51,7 +56,7 @@ void ICACHE_FLASH_ATTR supla_w1_init(void) {
 		PIN_PULLUP_EN(PERIPHS_IO_MUX_GPIO5_U);
 	#elif defined(W1_GPIO3)
 
-	    system_uart_swap ();
+//	    system_uart_swap ();
 
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0RXD_U, FUNC_GPIO3);
 		PIN_PULLUP_EN(PERIPHS_IO_MUX_U0RXD_U);
